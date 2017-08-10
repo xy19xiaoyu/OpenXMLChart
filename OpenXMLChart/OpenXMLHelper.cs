@@ -16,7 +16,7 @@ namespace OpenXMLChart
         /// <param name="starty">index start from 1 for column</param>
         /// <param name="columnCount"></param>
         /// <param name="rowCount"></param>
-        public void InsertChartInSpreadsheet(WorksheetPart,int startx, int starty, int columnCount, int rowCount)
+        public void InsertChartInSpreadsheet(WorksheetPart sheetpart,string sheetName,int startx, int starty, int columnCount, int rowCount,int chart_pointx,int chart_pointy)
         {
             WorksheetPart worksheetPart = CurrentWorksheetPart;
             #region SDK How to example code
@@ -120,6 +120,18 @@ namespace OpenXMLChart
             // Save the WorksheetDrawing object.
             drawingsPart.WorksheetDrawing.Save();
             #endregion
+        }
+        public static string GetColumnName(int index)
+        {
+            if (index < 0) { throw new Exception("invalid parameter"); }
+            List<string> chars = new List<string>();
+            do
+            {
+                if (chars.Count > 0) index--;
+                chars.Insert(0, ((char)(index % 26 + (int)'A')).ToString());
+                index = (int)((index - index % 26) / 26);
+            } while (index > 0);
+            return String.Join(string.Empty, chars.ToArray());
         }
     }
 }
